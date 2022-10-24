@@ -1,6 +1,7 @@
 import { ConsoleLogPipe } from "./pipes/consoleLog.pipe";
 import { ParseJSONPipe } from "./pipes/parseJSON.pipe";
 import { ReverseStringPipe } from "./pipes/reverseString.pipe";
+import { SQLQPipe } from "./pipes/sqlq.pipe";
 import { SQLStringEscapePipe } from "./pipes/sqlStringEscape.pipe";
 import { ToJSONPipe } from "./pipes/toJSON.pipe";
 /**
@@ -13,6 +14,7 @@ const PIPE_LIST = [
   new ToJSONPipe(),
   new ParseJSONPipe(),
   new SQLStringEscapePipe(),
+  new SQLQPipe(),
   new ReverseStringPipe(),
   new ConsoleLogPipe(),
 ];
@@ -25,7 +27,6 @@ export function splitTemplate(template: string): string[] {
 }
 
 function processPipes(
-  placeholder: string,
   value: any,
   pipeDeclString: string,
   PIPE_LIST: Array<any>
@@ -101,19 +102,13 @@ function analyzeTemplate(
         const TEMPLATE: Array<string> = [];
 
         TARGET_VALUE.forEach((value: any) => {
-          const VAL = processPipes(
-            templateTokens[x],
-            value,
-            STR_META_DATA[1],
-            NEW_PIPE_LIST
-          );
+          const VAL = processPipes(value, STR_META_DATA[1], NEW_PIPE_LIST);
           TEMPLATE.push(VAL);
         });
 
         templateTokens[x] = TEMPLATE.join(" ");
       } else {
         templateTokens[x] = processPipes(
-          templateTokens[x],
           TARGET_VALUE,
           STR_META_DATA[1],
           NEW_PIPE_LIST

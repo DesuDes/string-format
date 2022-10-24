@@ -11,9 +11,12 @@ const OPTS = {
   ],
 };
 
-const T = formatString("{{:numbers2.@0-.@1.@0-}}.", null);
+const p = performance.now();
+const T = formatString("{{:id}}", {
+  id: "155 OR 1=1",
+});
 
-console.log(T);
+console.log(T, performance.now() - p);
 
 // // console.log("----");
 // const FORMATTED_STRING = formatString("Sample: {{:hello }}", {
