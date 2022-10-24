@@ -1,18 +1,19 @@
 {
   "name": "@jodzjcm/string-format",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A string formatter inspired by Angular's text interpolation.",
   "scripts": {
     "test": "jest",
     "test:init": "npx jest --init",
     "test:watch": "npx jest --watch",
     "format": "npx prettier --write **/*.{js,ts,html}",
-    "dev": "npx nodemon ./src/index.ts",
+    "dev": "npx nodemon dev.ts",
     "build": "rm -rf dist/ && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:esm": "npx tsc --removeComments",
     "build:cjs": "tsc --removeComments --module CommonJS --outDir dist/cjs",
-    "npm:publish:test": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE && cd dist && npm pack",
-    "npm:publish": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE && cd dist && npm publish --access=public"
+    "npm:publish:build-copy": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE",
+    "npm:publish:test": "npm run npm:publish:build-copy && cd dist && npm pack",
+    "npm:publish": "npm run npm:publish:build-copy && cd dist && npm publish --access=public"
   },
   "main": "cjs/index.js",
   "types": "index.d.ts",

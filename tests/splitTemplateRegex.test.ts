@@ -28,3 +28,11 @@ test(`Testcase #3: Split template regex => ${TESTCASE_2}`, () => {
     "!",
   ]);
 });
+
+test(`Testcase #4: Split template regex => ${TESTCASE_2}`, () => {
+  expect(splitTemplate("{{}}{{:tiger|somePipe}}!")).toStrictEqual([
+    "{{}}",
+    "{{:tiger|somePipe}}",
+    "!",
+  ]);
+});
