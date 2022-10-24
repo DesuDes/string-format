@@ -11,8 +11,8 @@
     "build": "rm -rf dist/ && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:esm": "npx tsc --removeComments",
     "build:cjs": "tsc --removeComments --module CommonJS --outDir dist/cjs",
-    "npm:publish:test": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cd dist && npm pack",
-    "npm:publish": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cd dist && npm publish --access=public"
+    "npm:publish:test": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE && cd dist && npm pack",
+    "npm:publish": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE && cd dist && npm publish --access=public"
   },
   "main": "cjs/index.js",
   "types": "index.d.ts",
