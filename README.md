@@ -1,5 +1,9 @@
 
 # @jodzjcm/string-format
+
+![example workflow](https://github.com/DesuDes/string-format/actions/workflows/node.js.yml/badge.svg)
+
+
 Format-String is a Javascript/Typescript tool for formatting strings inspired by Angular's text interpolation.
 
 
