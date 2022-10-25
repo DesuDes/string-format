@@ -8,6 +8,7 @@
     "test:watch": "npx jest --watch",
     "format": "npx prettier --write **/*.{js,ts,html}",
     "dev": "npx nodemon dev.ts",
+    "prettify": "npx prettier --write src/",
     "build": "rm -rf dist/ && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:esm": "npx tsc --removeComments",
     "build:cjs": "tsc --removeComments --module CommonJS --outDir dist/cjs",
