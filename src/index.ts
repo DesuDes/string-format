@@ -19,6 +19,7 @@ const PIPE_LIST = [
   new ConsoleLogPipe(),
 ];
 
+let CACHE_PARSED_JSON: any = {};
 export function splitTemplate(template: string): string[] {
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split#splitting_with_a_regexp_to_include_parts_of_the_separator_in_the_result
@@ -173,6 +174,18 @@ function getTargetValueForArray(
   return targetValue;
 }
 
+function parseJSON(tempObject: any, path: string) {
+  let tempValue = tempObject;
+
+  try {
+    tempValue = JSON.parse(tempObject[path]);
+  } catch (e) {
+    tempValue = undefined;
+  }
+
+  return tempValue;
+}
+
 function getTargetValue(
   targetObject: any,
   path: string[]
@@ -192,11 +205,27 @@ function getTargetValue(
           tempObject
         );
       }
+    } else if (pathName[0] === "!") {
+      // this code block is for accessing json immediately as indicated by the syntax.
+      //exclude the symbol '!' and retain the path
+      const CUR_PATH = path.slice(0, x + 1).join(".");
+      if (CACHE_PARSED_JSON[CUR_PATH]) {
+        targetValue = CACHE_PARSED_JSON[CUR_PATH];
+      } else {
+        const VALUE = parseJSON(tempObject, pathName.substring(1));
+        CACHE_PARSED_JSON[CUR_PATH] = VALUE;
+        targetValue = VALUE;
+      }
     } else {
-      targetValue = tempObject[pathName];
+      targetValue = tempObject?.[pathName];
     }
 
-    if (typeof targetValue === "object") {
+    //traverse the object. Also asign falsy values if needed to establish undefined paths.
+    if (
+      typeof targetValue === "object" ||
+      targetValue === undefined ||
+      targetValue === null
+    ) {
       tempObject = targetValue;
     }
   }
@@ -207,6 +236,9 @@ export function formatString(template: string, value: any, opts?: any): string {
   const TARGET_OBJECT = value;
 
   if (typeof TARGET_OBJECT === "object" && TARGET_OBJECT !== null) {
+    //remove existing data from cache
+    CACHE_PARSED_JSON = {};
+
     const SPLITTED_DATA = splitTemplate(template);
     const PREP_DATA = analyzeTemplate(SPLITTED_DATA, TARGET_OBJECT, opts);
 

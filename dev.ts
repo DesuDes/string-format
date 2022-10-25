@@ -1,4 +1,5 @@
 import { formatString } from "./src";
+import { JSON_TEST_DATA } from "./tests/data";
 
 const OPTS = {
   pipes: [
@@ -11,13 +12,29 @@ const OPTS = {
   ],
 };
 
+// console.time("Bench marking start");
+console.log("---");
 const p = performance.now();
-const T = formatString("{{:id}}", {
-  id: "155 OR 1=1",
-});
+const J = {
+  name: "Tiger",
+  age: 30,
+  city: "New York",
+  e: '{"city": "Makati City", "age" : 28}',
+};
 
-console.log(T, performance.now() - p);
+const JSON_SAMPLE = {
+  id: "sample",
+  json: JSON.stringify(J),
+};
+// console.log(JSON_SAMPLE);
+const T = formatString(
+  "Favorite team: {{:!raw.!child.!child.members.@0- }}.",
+  JSON_TEST_DATA
+);
+// console.timeEnd("Bench marking start");
+const pe = performance.now();
 
+console.log(T, pe - p);
 // // console.log("----");
 // const FORMATTED_STRING = formatString("Sample: {{:hello }}", {
 //   hello: "Hello",
