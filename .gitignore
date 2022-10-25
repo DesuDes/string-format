@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Do not include dev file for debugging
+dev.ts
