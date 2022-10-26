@@ -1,6 +1,6 @@
 {
   "name": "@jodzjcm/string-format",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A string formatter inspired by Angular's text interpolation.",
   "scripts": {
     "test": "jest",
