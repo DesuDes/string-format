@@ -42,3 +42,27 @@ export const TEST_DATA = {
   arrBool: [true, true, false, true],
   undef: [undefined, null, true, false, "b"],
 };
+
+const JSON_CHILD_2 = {
+  team: "Team 3&5 - GSW",
+  year: [2014, 2019],
+  members: ["Steph", "Dray", "Klay", "Durant", true, undefined, false, null], //json.stringify converts `undefined` to `null`
+  complexChild: [
+    { data: JSON.stringify(TEST_DATA) },
+    { data: JSON.stringify(TEST_DATA) },
+  ],
+};
+
+const JSON_CHILD_1 = {
+  randomNumber: 69,
+  child: JSON.stringify(JSON_CHILD_2),
+};
+
+const JSON_MAIN = {
+  name: "Tiger",
+  age: 30,
+  city: "New York",
+  child: JSON.stringify(JSON_CHILD_1),
+};
+
+export const JSON_TEST_DATA = { raw: JSON.stringify(JSON_MAIN) };
