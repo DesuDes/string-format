@@ -5,7 +5,7 @@
 ![Tests](https://github.com/DesuDes/string-format/actions/workflows/node.js.yml/badge.svg)
 
   
- This is a string interpolation library inspired by the Angular Framework. 
+ This is a string interpolation library inspired by how [Angular](https://angular.io/guide/interpolation) embeds an expression into a formatted string.
 
 ## Installation
 
@@ -26,7 +26,7 @@ import { formatString } from "@jodzjcm/string-format";
 
 ## Usage
 
-Provide a string literal with one or more placeholders, and a data as its reference to interpolate the formatted string.
+Provide a string literal with one or more placeholders, and a data as its reference to interpolate a formatted string.
 
 ***formatString( stringTemplate : string, object : Object, opts ? : any );***
 
@@ -180,8 +180,6 @@ console.log(formatString("{{:numbers2.@0-.@1.@0-}}.", TEST_DATA));
   
   To make things easier, you could access a json string directly by using `!` in your expression.
 
-
-To demonstrate .
 ```
 const JSON_CHILD_2 = {
 	team: "Team 3&5 - GSW",
@@ -209,7 +207,7 @@ const JSON_MAIN = {
 const THE_EXAMPLE = { myRawJSONString: JSON.stringify(JSON_MAIN) }; 
 ```
   
-Indicate `!` to automatically interpret the JSON string and use the existing notations discussed previously like the `.` and `@` notation to access its properties.
+Indicate `!` to automatically interpret the JSON string and use the existing notations discussed to access its properties.
 
 ```
 formatString("Hello {{:!myRawJSONString.name}}.", THE_EXAMPLE); //OUTPUT: Hello Tiger.
@@ -229,7 +227,7 @@ formatString("{{:!myRawJSONString.!child.!child.complexChild.@0-.info.name}} {{:
 //OUTPUT: Tiger Tiger Tiger Tiger.
 ```
 
-For performance considerations, the resulting values when parsing the JSON string are cached ephemerally. The cache will be only cleared upon the end of the invocation.
+For performance considerations, the resulting values when parsing the JSON string are cached ephemerally until the end of the function's invocation.
 
 ### Pipes
 
@@ -270,6 +268,13 @@ const STR1 = formatString(
 
 //Sleeping and playing are now in lowercase and will be uppercased
 console.log(STR1); //OUTPUT: "Hi! I'm Tiger and my hobbies are: SLEEPING PLAYING."
+
+
+```
+You can chain two or more pipes.
+```
+"Hi! I'm {{ :info.name }} and my hobbies are: 
+{{ :info.hobbies.@1-2 | pipe1 --> pipe2 ---> pipe3 --> andSoOn }}.", CAT_DATA);
 ```
 
   
@@ -306,7 +311,7 @@ console.log(STR1); //OUTPUT: "Hi! I'm Tiger and my hobbies are: SLEEPING PLAYING
 If you want to create your own set of transformation rules like transforming dates using your favorite library like `date-fns` or `moment`, you may need to create your own pipes.
 
 
-To create your own transformation pipe,  provide the options object which is third param of the `formatString`  and assign a property `pipes`. 
+To create your own transformation pipe,  provide the options object which is third param of the `formatString`  and assign a property named `pipes`. 
 
 ```
 pipes : Array<{
@@ -332,4 +337,3 @@ pipes: [
 
 //The output: "hello wooorld!."
 ```
-

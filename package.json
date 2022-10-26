@@ -24,7 +24,8 @@
     "formatter",
     "format",
     "string-format",
-    "format-string"
+    "format-string",
+    "placeholder"
   ],
   "author": "jodzjcm",
   "license": "MIT",
