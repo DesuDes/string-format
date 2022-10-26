@@ -15,7 +15,7 @@
     "build:cjs": "tsc --removeComments --module CommonJS --outDir dist/cjs",
     "npm:publish:build-copy": "npm run build && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md && cp ./LICENSE ./dist/LICENSE",
     "npm:publish:test": "npm run npm:publish:build-copy && cd dist && npm pack",
-    "npm:publish": "npm run npm:publish:build-copy && cd dist && npm publish --access=public"
+    "npm:publish": "npm run test && npm run npm:publish:build-copy && cd dist && npm publish --access=public"
   },
   "main": "cjs/index.js",
   "types": "index.d.ts",
